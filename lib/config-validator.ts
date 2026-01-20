@@ -84,6 +84,11 @@ Examples:
       '--strict',
       'Fail command if any configuration warnings, errors, or a migration is needed',
     )
+    .option(
+      '--global [VALUE]',
+      'When specifying [config-files], treat them as a global self-hosted configuration file(s)',
+      true,
+    )
     // allow us to manage the exit code
     .exitOverride();
 
@@ -91,6 +96,11 @@ Examples:
     const strict = opts.strict ?? false;
 
     if (files.length) {
+      let isGlobalConfig = true;
+      if (opts.global === 'false') {
+        isGlobalConfig = false;
+      }
+      const configType = isGlobalConfig ? 'global' : 'repo';
       for (const file of files) {
         try {
           if (!(await pathExists(file))) {
@@ -100,8 +110,8 @@ Examples:
           }
           const parsedContent = await getParsedContent(file);
           try {
-            logger.info(`Validating ${file}`);
-            await validate('global', file, parsedContent, strict);
+            logger.info(`Validating ${file} as ${configType} config`);
+            await validate(configType, file, parsedContent, strict);
           } catch (err) {
             logger.warn({ file, err }, 'File is not valid Renovate config');
             returnVal = 1;
