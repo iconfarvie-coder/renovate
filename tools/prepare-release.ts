@@ -30,9 +30,10 @@ const program = new Command('pnpm release:prepare')
 void (async () => {
   await program.parseAsync();
   const opts = program.opts();
-  logger.info(`Preparing v${opts.version} ...`);
+  const version = opts.version ? opts.version.toString() : undefined;
+  logger.info(`Preparing v${version} ...`);
   build();
-  await generateDocs(undefined, undefined, opts.version);
+  await generateDocs(undefined, undefined, version);
   await bake('build', opts);
 })();
 
