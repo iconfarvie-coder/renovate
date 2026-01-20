@@ -14,7 +14,7 @@ import { setHttpRateLimits } from '../../util/http/rate-limits';
 import { initMergeConfidence } from '../../util/merge-confidence';
 import { setMaxLimit } from './limits';
 
-async function setDirectories(input: AllConfig): Promise<AllConfig> {
+export async function setDirectories(input: AllConfig): Promise<AllConfig> {
   const config: AllConfig = { ...input };
   process.env.TMPDIR = process.env.RENOVATE_TMPDIR ?? os.tmpdir();
   if (config.baseDir) {
