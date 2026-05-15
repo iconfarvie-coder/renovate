@@ -91,6 +91,19 @@
       "description": "Mark major version bumps with the breaking label",
       "matchUpdateTypes": ["major"],
       "addLabels": ["breaking"]
+    },
+    {
+      "description": "Multiple major updates for got",
+      "matchDatasources": ["npm"],
+      "matchDepNames": ["got"],
+      "separateMultipleMajor": true
+    },
+    {
+      "matchPackageNames": [
+        "markdownlint-cli2",
+        "davidanson/markdownlint-cli2-action"
+      ],
+      "groupName": "markdownlint-cli2"
     }
   ],
   "customManagers": [

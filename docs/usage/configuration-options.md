@@ -371,6 +371,8 @@ Renovate also allows users to explicitly configure `baseBranchPatterns`, e.g. fo
 It's possible to add this setting into the `renovate.json` file as part of the "Configure Renovate" onboarding PR.
 If so then Renovate will reflect this setting in its description and use package file contents from the custom base branch(es) instead of default.
 
+Also, check [useBaseBranchConfig](#usebasebranchconfig) if you want to configure different configuration for each base branch.
+
 The simplest approach is exact matches, e.g. `["main", "dev"]`.
 `baseBranchPatterns` also supports Regular Expressions that must begin and end with `/`, e.g.:
 
@@ -2744,6 +2746,10 @@ You can confirm if your datasource supports the release timestamp by viewing [th
 !!! note
     Configuring this option will add a `renovate/stability-days` option to the status checks.
 
+<!-- prettier-ignore -->
+!!! note
+    As of Renovate 42.19.5, using `minimumReleaseAge=0 days` is treated the same as `minimumReleaseAge=null`.
+
 Examples of how you can use `minimumReleaseAge`:
 
 <!-- markdownlint-disable MD001 -->
@@ -4311,17 +4317,6 @@ By default, `renovate` will update to a version greater than `latest` only if th
 
 Must be valid usernames.
 
-**Required reviewers on GitHub**
-
-If you're assigning a team to review on GitHub, you must use the prefix `team:` and add the _last part_ of the team name.
-Say the full team name on GitHub is `@organization/foo`, then you'd set the config option like this:
-
-```json
-{
-  "reviewers": ["team:foo"]
-}
-```
-
 **Required reviewers on Azure DevOps**
 
 To mark a reviewer as required on Azure DevOps, you must use the prefix `required:`.
@@ -4331,6 +4326,28 @@ For example: if the username or team name is `bar` then you would set the config
 ```json
 {
   "reviewers": ["required:bar"]
+}
+```
+
+**Required reviewers on Forgejo**
+
+If you're assigning a team to review on Forgejo, you must use the prefix `team:` and add the _last part_ of the team name.
+Say the full team name on Forgejo is `organization/foo`, then you'd set the config option like this:
+
+```json
+{
+  "reviewers": ["team:foo"]
+}
+```
+
+**Required reviewers on GitHub**
+
+If you're assigning a team to review on GitHub, you must use the prefix `team:` and add the _last part_ of the team name.
+Say the full team name on GitHub is `@organization/foo`, then you'd set the config option like this:
+
+```json
+{
+  "reviewers": ["team:foo"]
 }
 ```
 
